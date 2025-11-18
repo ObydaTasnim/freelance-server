@@ -21,7 +21,7 @@ connectDB();
 app.use(
   cors({
     origin: [
-      "https://freelance-marketplace-neha.netlify.app",
+      "https://f-m-neha.netlify.app",
       "http://localhost:5173", // keep this for local dev
     ],
     credentials: true,
