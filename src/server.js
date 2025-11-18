@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
-dotenv.config();  
+dotenv.config();
 
 import express from "express";
 import cors from "cors";
-
+import mongoose from "mongoose";
 import connectDB from "./config/db.js";
 import errorHandler from "./middleware/errorHandler.js";
 
@@ -12,7 +12,6 @@ import jobRoutes from "./routes/jobRoutes.js";
 import acceptedTaskRoutes from "./routes/acceptedTaskRoutes.js";
 
 const app = express();
-const PORT = process.env.PORT || 5001;
 
 // Connect to MongoDB
 connectDB();
@@ -21,12 +20,13 @@ connectDB();
 app.use(
   cors({
     origin: [
-      "https://freelance-market-place.netlify.app",
-      "http://localhost:5173", // keep this for local dev
+      "https://freelancing-market-placee.netlify.app",
+      "http://localhost:5173",
     ],
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -40,10 +40,21 @@ app.get("/", (req, res) => {
     message: "Freelance Marketplace API",
     version: "1.0.0",
     status: "Running",
+    timestamp: new Date().toISOString(),
   });
 });
 
-// Error Handler 
+// Health check
+app.get("/health", (req, res) => {
+  res.json({
+    status: "OK",
+    mongodb:
+      mongoose.connection.readyState === 1 ? "Connected" : "Disconnected",
+    uptime: process.uptime(),
+  });
+});
+
+// Error Handler (must be last)
 app.use(errorHandler);
 
 // 404 Handler
