@@ -65,4 +65,20 @@ app.use((req, res) => {
   });
 });
 
-export default app;
+// ==========================================================
+// FIX: START THE SERVER AND LISTEN ON THE DEFINED PORT
+// ==========================================================
+// Define the Port - Use environment variable or default to 5001
+const PORT = process.env.PORT || 5001;
+
+// Start listening for requests
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`🔗 API URL: http://localhost:${PORT}`);
+});
+
+// Original file structure often uses export for testing frameworks,
+// but for a standalone server, the above app.listen is required.
+// You can remove the 'export default app;' line if you use the app.listen() block above,
+// as the server process handles the execution.
+// export default app; // REMOVE THIS LINE IF YOU ARE ADDING app.listen()
