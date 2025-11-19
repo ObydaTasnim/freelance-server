@@ -19,10 +19,8 @@ connectDB();
 // Middleware
 app.use(
   cors({
-    origin: [
-      "https://freelancing-market-placee.netlify.app",
-      "http://localhost:5173",
-    ],
+    origin: ["https://freelance-obyda.netlify.app",
+      "http://localhost:5173"],
     credentials: true,
   })
 );
